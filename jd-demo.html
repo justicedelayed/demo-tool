@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Justice Delayed - Interactive Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #1e293b 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .header-title h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .scale-icon {
+            width: 3rem;
+            height: 3rem;
+            color: #fbbf24;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            margin-bottom: 0.5rem;
+        }
+
+        .instruction {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .case-card {
+            background: #1e293b;
+            border-radius: 0.5rem;
+            border: 2px solid #475569;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .case-card:hover {
+            border-color: #fbbf24;
+        }
+
+        .case-button {
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .case-button:hover:not(:disabled) {
+            background: #334155;
+        }
+
+        .case-button:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        .case-button:disabled {
+            cursor: default;
+        }
+
+        .case-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            margin: 0 auto 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .case-icon.default {
+            color: #64748b;
+        }
+
+        .case-icon.jail {
+            color: #f87171;
+        }
+
+        .case-icon.free {
+            color: #4ade80;
+        }
+
+        .case-title {
+            font-size: 1.125rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .case-counter {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #fbbf24;
+            margin-bottom: 0.5rem;
+        }
+
+        .case-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 0.375rem;
+            background: #475569;
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #fbbf24;
+            transition: width 0.3s ease;
+        }
+
+        .click-hint {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .revelation {
+            padding: 1rem;
+            border-top: 2px solid;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .revelation.jail {
+            background: #450a0a;
+            border-color: #991b1b;
+        }
+
+        .revelation.free {
+            background: #052e16;
+            border-color: #166534;
+        }
+
+        .revelation-text {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .revelation.jail .revelation-text {
+            color: #fecaca;
+        }
+
+        .revelation.free .revelation-text {
+            color: #bbf7d0;
+        }
+
+        .alert-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+
+        .court-info {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        .pending-count {
+            font-weight: bold;
+            color: #fbbf24;
+        }
+
+        .reset-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .reset-button {
+            background: #fbbf24;
+            color: #1e293b;
+            font-weight: bold;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .reset-button:hover {
+            background: #f59e0b;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cases-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-title">
+                <!-- <svg class="scale-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> -->
+                    <path d="M12 3v18m-4-4l4-4 4 4M8 7l4 4 4-4"/>
+                    <circle cx="12" cy="12" r="10"/>
+                </svg>
+                <h1>Justice Delayed</h1>
+            </div>
+            <p class="subtitle">Each box represents a currently ongoing case proceeding in an Indian district court.</p>
+            <p class="instruction">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                </svg> Explore a case. (1 click = 1 year)
+            </p>
+        </div>
+
+        <div class="cases-grid" id="casesGrid"></div>
+
+        <div class="reset-container">
+            <button class="reset-button" onclick="resetDemo()">Reset Demo</button>
+        </div>
+
+        <div class="footer">
+            <p id="statsText">Revealed: 0 of 8 cases</p>
+        </div>
+    </div>
+
+    <script>
+        var casesData = [
+            { id: 1, maxYears: 5, accusedName: "Umar Khalid & 8 others", inJail: true, pendingCases: 2, court: "Shahadra District Sessions Court, Delhi", yearsSinceRegistration: 5, caseType: "terrorism" },
+            { id: 2, maxYears: 19, accusedName: "Pralhad Kisan Gire-Devkar", inJail: false, pendingCases: 3, court: "Parali Vaijanath Beed District Court, Maharashtra", yearsSinceRegistration: 35, caseType: "murder" },
+            { id: 3, maxYears: 9, accusedName: "Shiv Nath", inJail: false, pendingCases: 1192, court: "Kanpur Nagar District Court, Uttar Pradesh", yearsSinceRegistration: 31, caseType: "murder" },
+            { id: 4, maxYears: 12, accusedName: "Sagar Kamthe & 4 others", inJail: false, pendingCases: 1187, court: "Pune District and Sessions Court, Maharashtra", yearsSinceRegistration: 13, caseType: "murder" },
+        ];
+
+        var clicks = {};
+        var revealed = {};
+
+        function handleClick(caseId) {
+            var currentClicks = clicks[caseId] || 0;
+            var caseData = null;
+            for (var i = 0; i < casesData.length; i++) {
+                if (casesData[i].id === caseId) {
+                    caseData = casesData[i];
+                    break;
+                }
+            }
+            
+            if (currentClicks < caseData.maxYears) {
+                clicks[caseId] = currentClicks + 1;
+                
+                if (clicks[caseId] === caseData.maxYears) {
+                    setTimeout(function() {
+                        revealed[caseId] = true;
+                        renderCases();
+                        updateStats();
+                    }, 300);
+                }
+                
+                renderCases();
+            }
+        }
+
+        function resetDemo() {
+            clicks = {};
+            revealed = {};
+            renderCases();
+            updateStats();
+        }
+
+        function updateStats() {
+            var revealedCount = Object.keys(revealed).length;
+            document.getElementById('statsText').textContent = 'Revealed: ' + revealedCount + ' of ' + casesData.length + ' cases';
+        }
+
+        function renderCases() {
+            var grid = document.getElementById('casesGrid');
+            grid.innerHTML = '';
+
+            for (var i = 0; i < casesData.length; i++) {
+                var caseData = casesData[i];
+                var accused = caseData.accusedName;
+                var caseType = caseData.caseType;
+                var numberOfyears = caseData.yearsSinceRegistration;
+                var currentClicks = clicks[caseData.id] || 0;
+                var isRevealed = revealed[caseData.id];
+                var progress = (currentClicks / caseData.maxYears) * 100;
+
+                var card = document.createElement('div');
+                card.className = 'case-card';
+
+                var iconClass = isRevealed ? (caseData.inJail ? 'jail' : 'free') : 'default';
+                
+                var revelationHTML = '';
+                if (isRevealed) {
+                    var revelationClass = caseData.inJail ? 'jail' : 'free';
+                    var statusText = caseData.inJail 
+                        ? accused + ' have been in jail with for the last ' + numberOfyears + ' years awaiting trial in a ' + caseType + ' case.'
+                        : 'The accused, ' + accused + ', are not in jail but the family of a murder victim has been awaiting justice for the last ' + numberOfyears + ' years.';
+                    
+                    revelationHTML = '<div class="revelation ' + revelationClass + '">' +
+                        '<div class="revelation-text">' +
+                                '<circle cx="12" cy="12" r="10"/>' +
+                                '<line x1="12" y1="8" x2="12" y2="12"/>' +
+                                '<line x1="12" y1="16" x2="12.01" y2="16"/>' +
+                            '</svg>' +
+                            '<span>' + statusText + '</span>' +
+                        '</div>' +
+                        '<p class="court-info">' +
+                            'The ' + caseData.court + ' has <span class="pending-count">' + caseData.pendingCases.toLocaleString() + '</span> such pending cases.' +
+                        '</p>' +
+                    '</div>';
+                }
+
+                var clickHint = !isRevealed ? '<p class="click-hint">Keep clicking to see if you are stuck in jail</p>' : '';
+                var yearLabel = currentClicks === 1 ? 'year' : 'years';
+                var disabledAttr = isRevealed ? 'disabled' : '';
+
+                card.innerHTML = 
+                    '<button class="case-button" onclick="handleClick(' + caseData.id + ')" ' + disabledAttr + '>' +
+                        '<svg class="case-icon ' + iconClass + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+                            '<path d="M12 3v18m-4-4l4-4 4 4M8 7l4 4 4-4"/>' +
+                            '<circle cx="12" cy="12" r="10"/>' +
+                        '</svg>' +
+                        '<h3 class="case-title">Case #' + caseData.id + '</h3>' +
+                        '<div class="case-counter">' + currentClicks + '</div>' +
+                        '<p class="case-label">' + yearLabel + ' pending</p>' +
+                        '<div class="progress-bar">' +
+                            '<div class="progress-fill" style="width: ' + progress + '%"></div>' +
+                        '</div>' +
+                        clickHint +
+                    '</button>' +
+                    revelationHTML;
+
+                grid.appendChild(card);
+            }
+        }
+
+        renderCases();
+        updateStats();
+    </script>
+</body>
+</html>
