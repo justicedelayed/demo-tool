@@ -58,21 +58,24 @@ body {
 
 .cases-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
     margin-bottom: 2rem;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+    align-items: start;
+    
 }
 
 .case-card {
+    display: flex;
+    flex-direction: column;
+    align-self: start;
     background: #cfd8e9;
     border-radius: 0.5rem;
     border: 2px solid #475569;
     overflow: hidden;
     transition: all 0.3s ease;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    height: fit-content;
 }
 
 .case-card:hover {
@@ -85,8 +88,9 @@ body {
     background: transparent;
     border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
     color: #2166ac;
+    flex-shrink: 0;
+    min-height: 220px;
 }
 
 .case-button:hover:not(:disabled) {
@@ -102,23 +106,11 @@ body {
 }
 
 .case-icon {
-    width: 2.5rem;
-    height: 2.5rem;
-    margin: 0 auto 0.5rem;
+    height: 0.2rem;
+    margin: 0 auto;
     transition: color 0.3s ease;
 }
 
-.case-icon.default {
-    color: #64748b;
-}
-
-.case-icon.jail {
-    color: #ffffbf;
-}
-
-.case-icon.free {
-    color: #91bfdb;
-}
 
 .case-title {
     font-size: 1.125rem;
@@ -162,17 +154,15 @@ body {
 .revelation {
     padding: 1rem;
     border-top: 2px solid;
-    animation: fadeIn 0.5s ease-out;
+    position: relative;
 }
 
 .revelation.jail {
-    background: #01665e;
-    border-color: #c7eae5;
+    background: #01665e;   
 }
 
 .revelation.free {
     background: #4575b4;
-    border-color: #e0f3f8;
 }
 
 .revelation-text {
@@ -235,6 +225,76 @@ body {
     color: #94a3b8;
     font-size: 0.875rem;
 }
+
+.know-more-btn {
+    margin-top: 12px;
+    padding: 8px 16px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.know-more-btn:hover {
+    background-color: #34495e;
+}
+
+.cnr-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.cnr-info {
+    padding: 5px 20px;
+    border-radius: 2px;
+    font-size: 14px;
+    flex: 1;
+}
+
+.cnr-info {
+    color: #fdfdfd;
+}
+
+.legend {
+    margin: 4px 0;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+
+.legend-items {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-color {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+}
+
+.legend-color.jail {
+    background: #01665e;
+}
+
+.legend-color.free {
+    background: #4575b4;
+}
+
+
 
 @keyframes fadeIn {
     from {
