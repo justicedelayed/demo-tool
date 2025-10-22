@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="'stylesheet" href="demo.css">
+    <link rel="stylesheet" href="demo.css">
     <title>Justice Delayed - Interactive Demo</title>
 </head>
 <body>
@@ -23,6 +23,18 @@
                     <polyline points="12 6 12 12 16 14"/>
                 </svg> Explore a case. (1 click = 1 year)
             </p>
+            <div class="legend instruction">
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <div class="legend-color jail"></div>
+                        <span>Accused incarcerated</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color free"></div>
+                        <span>Accused free</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="cases-grid" id="casesGrid"></div>
@@ -86,6 +98,19 @@
             document.getElementById('statsText').textContent = 'Revealed: ' + revealedCount + ' of ' + casesData.length + ' cases';
         }
 
+        function toggleCNR(caseId) {
+            var cnrDiv = document.getElementById('cnr-' + caseId);
+            var btn = event.target;
+            
+            if (cnrDiv.style.display === 'none') {
+                cnrDiv.style.display = 'block';
+                btn.textContent = 'Show Less';
+            } else {
+                cnrDiv.style.display = 'none';
+                btn.textContent = 'Know More';
+            }
+        }
+
         function renderCases() {
             var grid = document.getElementById('casesGrid');
             grid.innerHTML = '';
@@ -114,16 +139,18 @@
                     
                     revelationHTML = '<div class="revelation ' + revelationClass + '">' +
                         '<div class="revelation-text">' +
-                                '<circle cx="12" cy="12" r="10"/>' +
-                                '<line x1="12" y1="8" x2="12" y2="12"/>' +
-                                '<line x1="12" y1="16" x2="12.01" y2="16"/>' +
-                            '</svg>' +
                             '<span>' + statusText + '</span>' +
                         '</div>' +
                         '<p class="court-info">' +
-                            'The ' + caseData.court + ' has <span class="pending-count">' + caseData.pendingCases.toLocaleString() + '</span> such pending cases.' +
+                             caseData.court + ' has <span class="pending-count">' + caseData.pendingCases.toLocaleString() + '</span> such pending cases.' +
                         '</p>' +
-                    '</div>';
+                        '<div class="cnr-container">' +
+                        '<button class="know-more-btn" onclick="toggleCNR(' + caseData.id + ')">Know More</button>' +
+                        '<div class="cnr-info" id="cnr-' + caseData.id + '" style="display: none;">' +
+                            '<p><strong>CNR Number:</strong> ' + cnrNumber + '</p>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
                 }
 
                 var clickHint = !isRevealed ? '<p class="click-hint">Keep clicking to pass years</p>' : '';
@@ -132,9 +159,9 @@
 
                 card.innerHTML = 
                     '<button class="case-button" onclick="handleClick(' + caseData.id + ')" ' + disabledAttr + '>' +
-                        '<svg class="case-icon ' + iconClass + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
-                            '<path d="M12 3v18m-4-4l4-4 4 4M8 7l4 4 4-4"/>' +
-                            '<circle cx="12" cy="12" r="10"/>' +
+                        '<svg class="case-icon ' + iconClass + ' fill="none" >' +
+                            
+                            
                         '</svg>' +
                         '<h3 class="case-title">Case #' + caseData.id + '</h3>' +
                         '<div class="case-counter">' + currentClicks + '</div>' +
