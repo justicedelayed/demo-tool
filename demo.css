@@ -1,0 +1,254 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: white; /*linear-gradient(135deg, #1e293b 0%, #334155 50%, #1e293b 100%) */
+    min-height: 100vh;
+    padding: 2rem;
+    color: rgb(0, 0, 0);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.header-title h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.scale-icon {
+    width: 3rem;
+    height: 3rem;
+    color: #fbbf24;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: #737373;
+    margin-bottom: 0.5rem;
+}
+
+.instruction {
+    font-size: 1.1rem;
+    color: #737373;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.cases-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.case-card {
+    background: #cfd8e9;
+    border-radius: 0.5rem;
+    border: 2px solid #475569;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.case-card:hover {
+    border-color: #fbbf24;
+}
+
+.case-button {
+    width: 100%;
+    padding: 1rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #2166ac;
+}
+
+.case-button:hover:not(:disabled) {
+    background: #cfd8e9;
+}
+
+.case-button:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.case-button:disabled {
+    cursor: default;
+}
+
+.case-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0 auto 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.case-icon.default {
+    color: #64748b;
+}
+
+.case-icon.jail {
+    color: #ffffbf;
+}
+
+.case-icon.free {
+    color: #91bfdb;
+}
+
+.case-title {
+    font-size: 1.125rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.case-counter {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2166ac;
+    margin-bottom: 0.5rem;
+}
+
+.case-label {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 0.375rem;
+    background: #475569;
+    border-radius: 9999px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #fbbf24;
+    transition: width 0.3s ease;
+}
+
+.click-hint {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.revelation {
+    padding: 1rem;
+    border-top: 2px solid;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.revelation.jail {
+    background: #01665e;
+    border-color: #c7eae5;
+}
+
+.revelation.free {
+    background: #4575b4;
+    border-color: #e0f3f8;
+}
+
+.revelation-text {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.revelation.jail .revelation-text {
+    color: #fecaca;
+}
+
+.revelation.free .revelation-text {
+    color: #bbf7d0;
+}
+
+.alert-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+}
+
+.court-info {
+    font-size: 0.75rem;
+    color: #94a3b8;
+}
+
+.pending-count {
+    font-weight: bold;
+    color: #fbbf24;
+}
+
+.reset-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.reset-button {
+    background: #fbbf24;
+    color: #1e293b;
+    font-weight: bold;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.reset-button:hover {
+    background: #f59e0b;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 3rem;
+    color: #94a3b8;
+    font-size: 0.875rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .cases-grid {
+        grid-template-columns: 1fr;
+    }
+}
