@@ -13,10 +13,10 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #1e293b 100%);
+            background: white; /*linear-gradient(135deg, #1e293b 0%, #334155 50%, #1e293b 100%) */
             min-height: 100vh;
             padding: 2rem;
-            color: white;
+            color: rgb(0, 0, 0);
         }
 
         .container {
@@ -50,13 +50,13 @@
 
         .subtitle {
             font-size: 1.25rem;
-            color: #cbd5e1;
+            color: #737373;
             margin-bottom: 0.5rem;
         }
 
         .instruction {
             font-size: 1.1rem;
-            color: #94a3b8;
+            color: #737373;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -74,7 +74,7 @@
         }
 
         .case-card {
-            background: #1e293b;
+            background: #cfd8e9;
             border-radius: 0.5rem;
             border: 2px solid #475569;
             overflow: hidden;
@@ -93,11 +93,11 @@
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            color: white;
+            color: #2166ac;
         }
 
         .case-button:hover:not(:disabled) {
-            background: #334155;
+            background: #adc1e3;
         }
 
         .case-button:active:not(:disabled) {
@@ -136,7 +136,7 @@
         .case-counter {
             font-size: 2.5rem;
             font-weight: bold;
-            color: #fbbf24;
+            color: #2166ac;
             margin-bottom: 0.5rem;
         }
 
@@ -265,10 +265,10 @@
     <div class="container">
         <div class="header">
             <div class="header-title">
-                <!-- <svg class="scale-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> -->
+                <img src='balance-scales.png' class="scale-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 3v18m-4-4l4-4 4 4M8 7l4 4 4-4"/>
                     <circle cx="12" cy="12" r="10"/>
-                </svg>
+            </img>
                 <h1>Justice Delayed</h1>
             </div>
             <p class="subtitle">Each box represents a currently ongoing case proceeding in an Indian district court.</p>
@@ -293,12 +293,12 @@
 
     <script>
         var casesData = [
-            { id: 1, maxYears: 5, accusedName: "Umar Khalid & 8 others", inJail: true, pendingCases: 2, court: "Shahadra District Sessions Court, Delhi", yearsSinceRegistration: 5, caseType: "terrorism" },
-            { id: 2, maxYears: 19, accusedName: "Pralhad Kisan Gire-Devkar", inJail: false, pendingCases: 3, court: "Parali Vaijanath Beed District Court, Maharashtra", yearsSinceRegistration: 35, caseType: "murder" },
-            { id: 3, maxYears: 9, accusedName: "Shiv Nath", inJail: false, pendingCases: 1192, court: "Kanpur Nagar District Court, Uttar Pradesh", yearsSinceRegistration: 31, caseType: "murder" },
-            { id: 4, maxYears: 12, accusedName: "Sagar Kamthe & 4 others", inJail: false, pendingCases: 1187, court: "Pune District and Sessions Court, Maharashtra", yearsSinceRegistration: 13, caseType: "murder" },
-            { id: 5, maxYears: 12, accusedName: "Hasan Shakil Hashmi & 8 other (two dead)", inJail: false, pendingCases: 486, court: "Darbhanga District and Sessions Court, Bihar", yearsSinceRegistration: 26, caseType: "murder" },
-            { id: 6, maxYears: 6, accusedName: "Mohanraj & Ajithkumar", inJail: true, pendingCases: 39, court: "Erode District and Sessions Court, Tamil Nadu", yearsSinceRegistration: 6, caseType: "caste-based killing" },
+            { id: 1, maxYears: 5, accusedName: "Umar Khalid & 8 others", inJail: true, pendingCases: 2, court: "Shahadra District Sessions Court, Delhi", yearsSinceRegistration: 5, caseType: "terrorism", cnr:'DLSH010051472020' },
+            { id: 2, maxYears: 19, accusedName: "Pralhad Kisan Gire-Devkar", inJail: false, pendingCases: 3, court: "Parali Vaijanath Beed District Court, Maharashtra", yearsSinceRegistration: 35, caseType: "murder", cnr:'MHBI130000041991' },
+            { id: 3, maxYears: 9, accusedName: "Shiv Nath", inJail: false, pendingCases: 1192, court: "Kanpur Nagar District Court, Uttar Pradesh", yearsSinceRegistration: 31, caseType: "murder", cnr:'UPKN040017741999' },
+            { id: 4, maxYears: 12, accusedName: "Sagar Kamthe & 4 others", inJail: false, pendingCases: 1187, court: "Pune District and Sessions Court, Maharashtra", yearsSinceRegistration: 13, caseType: "murder", cnr:'MHPU010040382014' },
+            { id: 5, maxYears: 12, accusedName: "Hasan Shakil Hashmi & 8 other (two dead)", inJail: false, pendingCases: 486, court: "Darbhanga District and Sessions Court, Bihar", yearsSinceRegistration: 26, caseType: "murder", cnr:'BRDA010000351999' },
+            { id: 6, maxYears: 6, accusedName: "Mohanraj & Ajithkumar", inJail: true, pendingCases: 39, court: "Erode District and Sessions Court, Tamil Nadu", yearsSinceRegistration: 6, caseType: "caste-based killing", cnr:'TRUT010000012000' },
         ];
 
         var clicks = {};
@@ -348,6 +348,7 @@
             for (var i = 0; i < casesData.length; i++) {
                 var caseData = casesData[i];
                 var accused = caseData.accusedName;
+                var cnrNumber = caseData.cnr;
                 var caseType = caseData.caseType;
                 var numberOfyears = caseData.yearsSinceRegistration;
                 var currentClicks = clicks[caseData.id] || 0;
@@ -363,8 +364,8 @@
                 if (isRevealed) {
                     var revelationClass = caseData.inJail ? 'jail' : 'free';
                     var statusText = caseData.inJail 
-                        ? accused + ' have been in jail with for the last ' + numberOfyears + ' years awaiting trial in a ' + caseType + ' case.'
-                        : 'The accused, ' + accused + ', are not in jail but the family of a murder victim has been awaiting justice for the last ' + numberOfyears + ' years.';
+                        ? accused + ' have been in jail for the last ' + numberOfyears + ' years awaiting trial in a ' + caseType + ' case.'
+                        : 'The accused, ' + accused + ', roam free as family of a ' + caseType + ' victim is awaiting justice for ' + numberOfyears + ' years.';
                     
                     revelationHTML = '<div class="revelation ' + revelationClass + '">' +
                         '<div class="revelation-text">' +
@@ -393,9 +394,9 @@
                         '<h3 class="case-title">Case #' + caseData.id + '</h3>' +
                         '<div class="case-counter">' + currentClicks + '</div>' +
                         '<p class="case-label">' + yearLabel + ' pending</p>' +
-                        '<div class="progress-bar">' +
-                            '<div class="progress-fill" style="width: ' + progress + '%"></div>' +
-                        '</div>' +
+                        // '<div class="progress-bar">' +
+                        //     '<div class="progress-fill" style="width: ' + progress + '%"></div>' +
+                        // '</div>' +
                         clickHint +
                     '</button>' +
                     revelationHTML;
