@@ -6,7 +6,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: white; /*linear-gradient(135deg, #1e293b 0%, #334155 50%, #1e293b 100%) */
+    background: white; 
     min-height: 100vh;
     padding: 2rem;
     color: rgb(0, 0, 0);
@@ -88,7 +88,7 @@ body {
     background: transparent;
     border: none;
     cursor: pointer;
-    color: #2166ac;
+    color: #4a1486;
     flex-shrink: 0;
     min-height: 220px;
 }
@@ -121,13 +121,13 @@ body {
 .case-counter {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #2166ac;
+    color: #4a1486;
     margin-bottom: 0.5rem;
 }
 
 .case-label {
-    font-size: 0.75rem;
-    color: #94a3b8;
+    font-size: 0.885remrem;
+    color: #4a1486;
     margin-bottom: 0.5rem;
 }
 
