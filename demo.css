@@ -147,7 +147,7 @@ body {
 }
 
 .click-hint {
-    font-size: 0.75rem;
+    font-size: 0.885rem;
     color: #64748b;
 }
 
@@ -169,7 +169,7 @@ body {
     display: flex;
     gap: 0.5rem;
     margin-bottom: 0.75rem;
-    font-size: 0.875rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 
@@ -189,8 +189,8 @@ body {
 }
 
 .court-info {
-    font-size: 0.75rem;
-    color: #94a3b8;
+    font-size: 0.888rem;
+    color: #a7bdd9;
 }
 
 .pending-count {
